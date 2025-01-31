@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="#000000">
+
+    <Button
+        android:id="@+id/btnChannel1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Channel 1"
+        android:textSize="24sp"
+        android:background="#FF5733"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnChannel2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Channel 2"
+        android:textSize="24sp"
+        android:background="#FFBD33"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnChannel3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Channel 3"
+        android:textSize="24sp"
+        android:background="#33FF57"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnChannel4"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Channel 4"
+        android:textSize="24sp"
+        android:background="#3399FF"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnChannel5"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Channel 5"
+        android:textSize="24sp"
+        android:background="#9B33FF"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>
