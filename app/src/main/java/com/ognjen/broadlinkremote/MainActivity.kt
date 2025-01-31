@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val views = listOf(
             findViewById<ImageView>(R.id.btnChannel1),  // ImageView for the first button
             findViewById<ImageView>(R.id.btnChannel2),
-            findViewById<Button>(R.id.btnChannel3),
+            findViewById<ImageView>(R.id.btnChannel3),
             findViewById<Button>(R.id.btnChannel4),
             findViewById<Button>(R.id.btnChannel5)
         )
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Arenasport clicked!", Toast.LENGTH_SHORT).show()
                     }
                     R.id.btnChannel3 -> {
-                        Toast.makeText(this, "Channel 3 clicked!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     }
                     R.id.btnChannel4 -> {
                         Toast.makeText(this, "Channel 4 clicked!", Toast.LENGTH_SHORT).show()
