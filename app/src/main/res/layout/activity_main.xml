@@ -20,15 +20,17 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <Button
+    <ImageView
         android:id="@+id/btnChannel2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/channel_2"
-        android:textSize="24sp"
-        android:background="#FFBD33"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/image_that_will_be_used_as_a_button"
+        android:src="@drawable/arenasport_logo_bg"
+        android:background="#03A9F5"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
     <Button
         android:id="@+id/btnChannel3"
