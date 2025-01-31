@@ -44,15 +44,17 @@
         android:clickable="true"
         android:focusable="true" />
 
-    <Button
+    <ImageView
         android:id="@+id/btnChannel4"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/channel_4"
-        android:textSize="24sp"
-        android:background="#3399FF"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/image_that_will_be_used_as_a_button"
+        android:src="@drawable/rts_logo"
+        android:background="#CDC3C4"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
     <Button
         android:id="@+id/btnChannel5"

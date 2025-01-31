@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel1),  // ImageView for the first button
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),
-            findViewById<Button>(R.id.btnChannel4),
+            findViewById<ImageView>(R.id.btnChannel4),
             findViewById<Button>(R.id.btnChannel5)
         )
 
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     }
                     R.id.btnChannel4 -> {
-                        Toast.makeText(this, "Channel 4 clicked!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
                     }
                     R.id.btnChannel5 -> {
                         Toast.makeText(this, "Channel 5 clicked!", Toast.LENGTH_SHORT).show()
