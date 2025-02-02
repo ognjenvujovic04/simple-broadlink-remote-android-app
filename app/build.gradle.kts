@@ -41,8 +41,9 @@ android {
 
 dependencies {
 
-    implementation(libs.material)
-    implementation(libs.androidx.appcompat) // I added this
+    implementation(libs.material)           // I added this
+    implementation(libs.androidx.appcompat)
+    implementation(libs.broadlink.api)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

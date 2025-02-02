@@ -13,7 +13,9 @@ material = "1.10.0"
 androidx-appcompat = "1.6.1"
 
 
+
 [libraries]
+broadlink-api = { group = "com.github.mob41.blapi", name = "broadlink-java-api", version = "1.0.1" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 
