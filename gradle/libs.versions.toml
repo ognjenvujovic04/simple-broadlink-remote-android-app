@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+broadlinkJavaApi = "1.0.2"
 kotlin = "2.0.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -15,7 +16,8 @@ androidx-appcompat = "1.6.1"
 
 
 [libraries]
-broadlink-api = { group = "com.github.mob41.blapi", name = "broadlink-java-api", version = "1.0.1" }
+#broadlink-api = { group = "com.github.ognjenvujovic04", name = "broadlink-java-api", version = "1.0.1" }
+broadlink-java-api-v102 = { module = "com.github.ognjenvujovic04:broadlink-java-api", version.ref = "broadlinkJavaApi" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 

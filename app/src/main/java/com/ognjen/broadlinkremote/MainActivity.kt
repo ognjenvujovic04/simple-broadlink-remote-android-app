@@ -5,14 +5,18 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.widget.ImageView
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.github.mob41.blapi.BLDevice
-import android.util.Log
+import com.github.mob41.blapi.RM2Device
+import com.github.mob41.blapi.mac.Mac
+
+import java.net.InetAddress
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,23 +90,23 @@ class MainActivity : AppCompatActivity() {
 
     // Discover BroadLink devices on the network
     private fun discoverBroadlinkDevices() {
+        val multicastLock = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
+            .createMulticastLock("multicastLock")
+        multicastLock.setReferenceCounted(true)
+        multicastLock.acquire()
+
         Thread {
             try {
                 Log.d("BroadLink", "Starting device discovery...")
-                val devices = BLDevice.discoverDevices(5000) // Search for 5 seconds
 
-                runOnUiThread {
-                    if (devices.isNotEmpty()) {
-                        Log.d("BroadLink", "Devices found: ${devices.size}")
-                        for (device in devices) {
-                            Log.d("BroadLink", "Found device: Type=${device.deviceType}, IP=${device.host}, MAC=${device.mac}")
-                            Toast.makeText(this, "Found device: ${device.host}", Toast.LENGTH_LONG).show()
-                        }
-                    } else {
-                        Log.d("BroadLink", "No devices found!")
-                        Toast.makeText(this, "No devices found!", Toast.LENGTH_LONG).show()
-                    }
-                }
+                Log.d("BroadLink", "Starting device discovery...")
+
+                val device = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"));
+                device.auth()
+
+                val success: Boolean = device.enterLearning()
+                Toast.makeText(this, "Enter Learning status: " + (if (success) "Success!" else "Failed!"), Toast.LENGTH_LONG).show()
+
             } catch (e: Exception) {
                 Log.e("BroadLink", "Error discovering devices: ${e.message}", e)
                 runOnUiThread {

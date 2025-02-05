@@ -1,7 +1,7 @@
 import broadlink
 from time import sleep
 
-# device = broadlink.hello('192.168.1.10')
+# device = broadlink.hello('192.168.1.3')
 # if device:
 #     print("Hello device found via broadcast discovery")
 #     print(f"Device found: {device}")
@@ -13,7 +13,7 @@ from time import sleep
 #     packet = device.check_data()
 #     print(f"Device codes: {packet}")
 
-devices = broadlink.discover(timeout=5, local_ip_address='192.168.1.6')
+devices = broadlink.discover(timeout=5, local_ip_address='192.168.1.9')
 
 if devices:
     for device in devices:

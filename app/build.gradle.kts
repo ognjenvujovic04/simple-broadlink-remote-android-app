@@ -43,7 +43,8 @@ dependencies {
 
     implementation(libs.material)           // I added this
     implementation(libs.androidx.appcompat)
-    implementation(libs.broadlink.api)
+//    implementation(libs.broadlink.api)
+    implementation(libs.broadlink.java.api.v102)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
