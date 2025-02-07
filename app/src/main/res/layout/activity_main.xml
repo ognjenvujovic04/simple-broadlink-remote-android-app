@@ -5,7 +5,39 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- Main content (buttons) -->
+    <!-- Top buttons (On/Off and Refresh) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="16dp">
+
+        <!-- On/Off Button -->
+        <ImageButton
+            android:id="@+id/btnOnOff"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/circle_background"
+            android:src="@drawable/refresh_icon"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Refresh Button -->
+        <ImageButton
+            android:id="@+id/btnRefresh"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/circle_background"
+            android:src="@drawable/power_icon"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <!-- Main content (channel buttons) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +48,7 @@
         <ImageView
             android:id="@+id/btnChannel1"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/sportklub_logo"
@@ -29,7 +61,7 @@
         <ImageView
             android:id="@+id/btnChannel2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/arenasport_logo_bg"
@@ -42,7 +74,7 @@
         <ImageView
             android:id="@+id/btnChannel3"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/bn_logo"
@@ -55,7 +87,7 @@
         <ImageView
             android:id="@+id/btnChannel4"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/rts_logo"
@@ -68,7 +100,7 @@
         <Button
             android:id="@+id/btnChannel5"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:text="@string/channel_5"
             android:textSize="24sp"
             android:background="#9B33FF"

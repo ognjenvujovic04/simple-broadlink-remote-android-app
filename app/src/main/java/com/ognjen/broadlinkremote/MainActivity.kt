@@ -14,6 +14,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -38,6 +39,19 @@ class MainActivity : AppCompatActivity() {
 //        enableMulticast()
 
         val overlay: View = findViewById(R.id.overlay)
+
+        // Initialize the top buttons
+        val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
+        val btnRefresh: ImageButton = findViewById(R.id.btnRefresh)
+
+        // Set click listeners for the top buttons
+        btnOnOff.setOnClickListener {
+            Toast.makeText(this, "On/Off clicked!", Toast.LENGTH_SHORT).show()
+        }
+
+        btnRefresh.setOnClickListener {
+            Toast.makeText(this, "Refresh clicked!", Toast.LENGTH_SHORT).show()
+        }
 
         val views = listOf(
             findViewById<ImageView>(R.id.btnChannel1),
