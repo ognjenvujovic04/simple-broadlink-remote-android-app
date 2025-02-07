@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:elevation="8dp"
+    android:background="#000">
+
+<ImageView
+android:id="@+id/popupChannel1"
+android:layout_width="240dp"
+android:layout_height="120dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/sk1_logo"
+android:background="#FFF"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+<ImageView
+android:id="@+id/popupChannel2"
+android:layout_width="240dp"
+android:layout_height="120dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/sk2_logo"
+android:background="#FFF"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+<ImageView
+android:id="@+id/popupChannel3"
+android:layout_width="240dp"
+android:layout_height="120dp"
+android:src="@drawable/sk3_logo"
+android:background="#FFF"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+    </LinearLayout>

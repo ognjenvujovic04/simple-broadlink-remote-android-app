@@ -5,9 +5,15 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.PopupWindow
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -24,11 +30,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Request necessary permissions at runtime
-        requestPermissions()
-
-        // Enable multicast for BroadLink discovery
-        enableMulticast()
+        // nisam siguran da li je potrebno
+//        // Request necessary permissions at runtime
+//        requestPermissions()
+//
+//        // Enable multicast for BroadLink discovery
+//        enableMulticast()
 
         val views = listOf(
             findViewById<ImageView>(R.id.btnChannel1),
@@ -41,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         views.forEach { view ->
             view.setOnClickListener {
                 when (view.id) {
-                    R.id.btnChannel1 -> Toast.makeText(this, "Sportklub clicked!", Toast.LENGTH_SHORT).show()
+                    R.id.btnChannel1 -> showSubChannelPopup(view) // Show popup for Sportklub
                     R.id.btnChannel2 -> Toast.makeText(this, "Arenasport clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel3 -> Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel4 -> Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
@@ -76,16 +83,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Handle permission request result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                Toast.makeText(this, "Permissions granted!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Permissions denied. Device discovery may not work.", Toast.LENGTH_LONG).show()
-            }
+    // Popup for sub-channels
+    private fun showSubChannelPopup(anchorView: View) {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.popup_sub_channels, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        popupWindow.elevation = 10f
+
+        val popupChannel1: ImageView = popupView.findViewById(R.id.popupChannel1)
+        val popupChannel2: ImageView = popupView.findViewById(R.id.popupChannel2)
+        val popupChannel3: ImageView = popupView.findViewById(R.id.popupChannel3)
+
+        popupChannel1.setOnClickListener {
+            sendSignal("SK1")
+            popupWindow.dismiss()
         }
+
+        popupChannel2.setOnClickListener {
+            sendSignal("SK2")
+            popupWindow.dismiss()
+        }
+
+        popupChannel3.setOnClickListener {
+            sendSignal("SK3")
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
     }
 
     // Discover BroadLink devices on the network
@@ -114,6 +146,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
+    }
+
+    private fun sendSignal(code: String) {
+        // Use Broadlink API to send the signal
+        Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
     }
 
 }
