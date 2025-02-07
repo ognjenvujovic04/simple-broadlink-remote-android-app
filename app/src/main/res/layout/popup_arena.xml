@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:elevation="8dp"
+    android:background="#424242">
+
+<ImageView
+android:id="@+id/arena1"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena1_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+<ImageView
+android:id="@+id/arena2"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena2_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+<ImageView
+android:id="@+id/arena3"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena3_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+
+<ImageView
+android:id="@+id/arena1premium"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena1p_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+
+<ImageView
+android:id="@+id/arena2premium"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena2p_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+
+
+<ImageView
+android:id="@+id/arena3premium"
+android:layout_width="240dp"
+android:layout_height="85dp"
+android:layout_marginBottom="10dp"
+android:src="@drawable/arena3p_logo"
+android:background="#000"
+android:scaleType="fitCenter"
+android:clickable="true"
+android:focusable="true" />
+    
+    
+
+    </LinearLayout>

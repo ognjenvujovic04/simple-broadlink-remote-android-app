@@ -23,8 +23,6 @@ import androidx.core.content.ContextCompat
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
 
-import java.net.InetAddress
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         views.forEach { view ->
             view.setOnClickListener {
                 when (view.id) {
-                    R.id.btnChannel1 -> showSubChannelPopup(view) // Show popup for Sportklub
-                    R.id.btnChannel2 -> Toast.makeText(this, "Arenasport clicked!", Toast.LENGTH_SHORT).show()
+                    R.id.btnChannel1 -> showSkPopup(view) // Show popup for Sportklub
+                    R.id.btnChannel2 -> showArenaPopup(view) // Show popup for Arenasport
                     R.id.btnChannel3 -> Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel4 -> Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel5 -> discoverBroadlinkDevices()
@@ -85,10 +83,55 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Popup for sub-channels
-    private fun showSubChannelPopup(anchorView: View) {
+    // Popup for arenasport sub-channels
+    private fun showArenaPopup(anchorView: View) {
         val inflater = LayoutInflater.from(this)
-        val popupView = inflater.inflate(R.layout.popup_sub_channels, null)
+        val popupView = inflater.inflate(R.layout.popup_arena, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        popupWindow.elevation = 10f
+
+        val popupChannel1: ImageView = popupView.findViewById(R.id.arena1)
+        val popupChannel2: ImageView = popupView.findViewById(R.id.arena2)
+        val popupChannel3: ImageView = popupView.findViewById(R.id.arena3)
+
+        popupChannel1.setOnClickListener {
+            sendSignal("Arena1")
+            popupWindow.dismiss()
+        }
+
+        popupChannel2.setOnClickListener {
+            sendSignal("Arena2")
+            popupWindow.dismiss()
+        }
+
+        popupChannel3.setOnClickListener {
+            sendSignal("Arena3")
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
+
+        // Auto-close the popup after 5 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (popupWindow.isShowing) {
+                popupWindow.dismiss()
+            }
+        }, 5000) // 5000 milliseconds = 5 seconds
+    }
+
+
+    // Popup for sportklub sub-channels
+    private fun showSkPopup(anchorView: View) {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.popup_sk, null)
 
         val popupWindow = PopupWindow(
             popupView,
