@@ -5,37 +5,30 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <!-- Top buttons (On/Off and Refresh) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:padding="16dp">
+    <!-- Refresh Button (Left Side) -->
+    <ImageButton
+        android:id="@+id/btnRefresh"
+        android:layout_width="72dp"
+    android:layout_height="72dp"
+    android:background="@drawable/circle_background"
+    android:src="@drawable/refresh_icon"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp" />
 
-        <!-- On/Off Button -->
-        <ImageButton
-            android:id="@+id/btnOnOff"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/circle_background"
-            android:src="@drawable/refresh_icon"
-            android:scaleType="fitCenter"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            android:focusable="true" />
-
-        <!-- Refresh Button -->
-        <ImageButton
-            android:id="@+id/btnRefresh"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/circle_background"
-            android:src="@drawable/power_icon"
-            android:scaleType="fitCenter"
-            android:clickable="true"
-            android:focusable="true" />
-    </LinearLayout>
+    <!-- On/Off Button (Right Side) -->
+    <ImageButton
+        android:id="@+id/btnOnOff"
+        android:layout_width="72dp"
+    android:layout_height="72dp"
+    android:background="@drawable/circle_background"
+    android:src="@drawable/power_icon"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_alignParentEnd="true" /> <!-- Align to the right side -->
 
     <!-- Main content (channel buttons) -->
     <LinearLayout
@@ -53,7 +46,7 @@
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/sportklub_logo"
             android:background="#AB1A1B"
-            android:foreground="@drawable/border_white"
+            android:foreground="@drawable/border_white_main"
             android:scaleType="fitCenter"
             android:clickable="true"
             android:focusable="true" />
@@ -65,7 +58,7 @@
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/arenasport_logo_bg"
-            android:foreground="@drawable/border_white"
+            android:foreground="@drawable/border_white_main"
             android:background="#03A9F5"
             android:scaleType="fitCenter"
             android:clickable="true"
@@ -78,7 +71,7 @@
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/bn_logo"
-            android:foreground="@drawable/border_white"
+            android:foreground="@drawable/border_white_main"
             android:background="#FFF"
             android:scaleType="fitCenter"
             android:clickable="true"
@@ -92,7 +85,7 @@
             android:contentDescription="@string/image_that_will_be_used_as_a_button"
             android:src="@drawable/rts_logo"
             android:background="#CDC3C4"
-            android:foreground="@drawable/border_white"
+            android:foreground="@drawable/border_white_main"
             android:scaleType="fitCenter"
             android:clickable="true"
             android:focusable="true" />
@@ -104,7 +97,7 @@
             android:text="@string/channel_5"
             android:textSize="24sp"
             android:background="#9B33FF"
-            android:foreground="@drawable/border_white"
+            android:foreground="@drawable/border_white_main"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
