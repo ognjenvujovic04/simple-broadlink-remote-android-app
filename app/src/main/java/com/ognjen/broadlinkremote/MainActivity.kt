@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
@@ -118,6 +120,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
+
+        // Auto-close the popup after 5 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (popupWindow.isShowing) {
+                popupWindow.dismiss()
+            }
+        }, 5000) // 5000 milliseconds = 5 seconds
     }
 
     // Discover BroadLink devices on the network
