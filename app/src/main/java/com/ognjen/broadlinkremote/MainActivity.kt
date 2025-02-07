@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 //        // Enable multicast for BroadLink discovery
 //        enableMulticast()
 
+        val overlay: View = findViewById(R.id.overlay)
+
         val views = listOf(
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
@@ -48,8 +50,8 @@ class MainActivity : AppCompatActivity() {
         views.forEach { view ->
             view.setOnClickListener {
                 when (view.id) {
-                    R.id.btnChannel1 -> showSkPopup(view) // Show popup for Sportklub
-                    R.id.btnChannel2 -> showArenaPopup(view) // Show popup for Arenasport
+                    R.id.btnChannel1 -> showSkPopup(view, overlay) // Show popup for Sportklub
+                    R.id.btnChannel2 -> showArenaPopup(view, overlay) // Show popup for Arenasport
                     R.id.btnChannel3 -> Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel4 -> Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel5 -> discoverBroadlinkDevices()
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Popup for arenasport sub-channels
-    private fun showArenaPopup(anchorView: View) {
+    private fun showArenaPopup(anchorView: View, overlay: View) {
         val inflater = LayoutInflater.from(this)
         val popupView = inflater.inflate(R.layout.popup_arena, null)
 
@@ -97,6 +99,8 @@ class MainActivity : AppCompatActivity() {
 
         popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
         popupWindow.elevation = 10f
+
+        overlay.visibility = View.VISIBLE
 
         val popupChannel1: ImageView = popupView.findViewById(R.id.arena1)
         val popupChannel2: ImageView = popupView.findViewById(R.id.arena2)
@@ -117,6 +121,12 @@ class MainActivity : AppCompatActivity() {
             popupWindow.dismiss()
         }
 
+
+        popupWindow.setOnDismissListener {
+            overlay.visibility = View.GONE
+        }
+
+
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
 
         // Auto-close the popup after 5 seconds
@@ -129,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
 
     // Popup for sportklub sub-channels
-    private fun showSkPopup(anchorView: View) {
+    private fun showSkPopup(anchorView: View, overlay: View) {
         val inflater = LayoutInflater.from(this)
         val popupView = inflater.inflate(R.layout.popup_sk, null)
 
@@ -142,6 +152,8 @@ class MainActivity : AppCompatActivity() {
 
         popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
         popupWindow.elevation = 10f
+
+        overlay.visibility = View.VISIBLE
 
         val popupChannel1: ImageView = popupView.findViewById(R.id.popupChannel1)
         val popupChannel2: ImageView = popupView.findViewById(R.id.popupChannel2)
@@ -160,6 +172,10 @@ class MainActivity : AppCompatActivity() {
         popupChannel3.setOnClickListener {
             sendSignal("SK3")
             popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
+            overlay.visibility = View.GONE
         }
 
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
