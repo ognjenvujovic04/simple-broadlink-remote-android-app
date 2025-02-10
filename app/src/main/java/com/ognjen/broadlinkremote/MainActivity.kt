@@ -5,18 +5,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.PopupWindow
-import android.graphics.drawable.ColorDrawable
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +19,7 @@ import com.github.mob41.blapi.mac.Mac
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var popupManager: PopupManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        enableMulticast()
 
         val overlay: View = findViewById(R.id.overlay)
+        popupManager = PopupManager(this, overlay, ::sendSignal)
 
         // Initialize the top buttons
         val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
@@ -64,8 +59,8 @@ class MainActivity : AppCompatActivity() {
         views.forEach { view ->
             view.setOnClickListener {
                 when (view.id) {
-                    R.id.btnChannel1 -> showSkPopup(view, overlay) // Show popup for Sportklub
-                    R.id.btnChannel2 -> showArenaPopup(view, overlay) // Show popup for Arenasport
+                    R.id.btnChannel1 -> popupManager.showSkPopup(view)
+                    R.id.btnChannel2 -> popupManager.showArenaPopup(view)
                     R.id.btnChannel3 -> Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel4 -> Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
                     R.id.btnChannel5 -> discoverBroadlinkDevices()
@@ -99,108 +94,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Popup for arenasport sub-channels
-    private fun showArenaPopup(anchorView: View, overlay: View) {
-        val inflater = LayoutInflater.from(this)
-        val popupView = inflater.inflate(R.layout.popup_arena, null)
-
-        val popupWindow = PopupWindow(
-            popupView,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-        popupWindow.elevation = 10f
-
-        overlay.visibility = View.VISIBLE
-
-        val popupChannel1: ImageView = popupView.findViewById(R.id.arena1)
-        val popupChannel2: ImageView = popupView.findViewById(R.id.arena2)
-        val popupChannel3: ImageView = popupView.findViewById(R.id.arena3)
-
-        popupChannel1.setOnClickListener {
-            sendSignal("Arena1")
-            popupWindow.dismiss()
-        }
-
-        popupChannel2.setOnClickListener {
-            sendSignal("Arena2")
-            popupWindow.dismiss()
-        }
-
-        popupChannel3.setOnClickListener {
-            sendSignal("Arena3")
-            popupWindow.dismiss()
-        }
-
-
-        popupWindow.setOnDismissListener {
-            overlay.visibility = View.GONE
-        }
-
-
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
-
-        // Auto-close the popup after 5 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (popupWindow.isShowing) {
-                popupWindow.dismiss()
-            }
-        }, 5000) // 5000 milliseconds = 5 seconds
-    }
-
-
-    // Popup for sportklub sub-channels
-    private fun showSkPopup(anchorView: View, overlay: View) {
-        val inflater = LayoutInflater.from(this)
-        val popupView = inflater.inflate(R.layout.popup_sk, null)
-
-        val popupWindow = PopupWindow(
-            popupView,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        popupWindow.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-        popupWindow.elevation = 10f
-
-        overlay.visibility = View.VISIBLE
-
-        val popupChannel1: ImageView = popupView.findViewById(R.id.popupChannel1)
-        val popupChannel2: ImageView = popupView.findViewById(R.id.popupChannel2)
-        val popupChannel3: ImageView = popupView.findViewById(R.id.popupChannel3)
-
-        popupChannel1.setOnClickListener {
-            sendSignal("SK1")
-            popupWindow.dismiss()
-        }
-
-        popupChannel2.setOnClickListener {
-            sendSignal("SK2")
-            popupWindow.dismiss()
-        }
-
-        popupChannel3.setOnClickListener {
-            sendSignal("SK3")
-            popupWindow.dismiss()
-        }
-
-        popupWindow.setOnDismissListener {
-            overlay.visibility = View.GONE
-        }
-
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
-
-        // Auto-close the popup after 5 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (popupWindow.isShowing) {
-                popupWindow.dismiss()
-            }
-        }, 5000) // 5000 milliseconds = 5 seconds
-    }
 
     // Discover BroadLink devices on the network
     private fun discoverBroadlinkDevices() {
@@ -230,6 +123,7 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
+    // todo placeholder for broadlinkManager
     private fun sendSignal(code: String) {
         // Use Broadlink API to send the signal
         Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
