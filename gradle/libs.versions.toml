@@ -20,6 +20,7 @@ androidx-appcompat = "1.6.1"
 broadlink-java-api-v102 = { module = "com.github.ognjenvujovic04:broadlink-java-api", version.ref = "broadlinkJavaApi" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

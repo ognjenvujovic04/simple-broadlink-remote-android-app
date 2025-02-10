@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
 //    implementation(libs.broadlink.api)
     implementation(libs.broadlink.java.api.v102)
+    implementation(libs.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
