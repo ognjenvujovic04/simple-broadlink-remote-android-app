@@ -5,11 +5,16 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -19,8 +24,15 @@ import com.github.mob41.blapi.mac.Mac
 
 
 class MainActivity : AppCompatActivity() {
+    private var isEditingMode = false
     private lateinit var popupManager: PopupManager
     private lateinit var broadlinkManager: BroadlinkManager
+    private lateinit var editControls: LinearLayout
+    private lateinit var txtEditMode: TextView
+    private lateinit var btnSave: Button
+    private lateinit var btnCancel: Button
+    private var editModeRunnable: Runnable? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +45,21 @@ class MainActivity : AppCompatActivity() {
 //        // Enable multicast for BroadLink discovery
 //        enableMulticast()
 
+        // Initialize edit controls
+        editControls = findViewById(R.id.editControls)
+        btnSave = findViewById(R.id.btnSave)
+        btnCancel = findViewById(R.id.btnCancel)
+
+        btnSave.setOnClickListener {
+            broadlinkManager.saveIRCodes()
+            exitEditMode()
+        }
+
+        btnCancel.setOnClickListener {
+            broadlinkManager.loadIRCodes()  // Reload original codes
+            exitEditMode()
+        }
+
         val overlay: View = findViewById(R.id.overlay)
         popupManager = PopupManager(this, overlay, ::sendSignal)
         // todo real address of the file
@@ -42,9 +69,16 @@ class MainActivity : AppCompatActivity() {
         val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
         val btnRefresh: ImageButton = findViewById(R.id.btnRefresh)
 
-        // Set click listeners for the top buttons
+// Add regular click listener for power functionality
         btnOnOff.setOnClickListener {
-            Toast.makeText(this, "On/Off clicked!", Toast.LENGTH_SHORT).show()
+                sendSignal("power")
+            if (isEditingMode){
+                exitEditMode()
+                sendSignal("Exiting edit mode")
+            } else {
+                enterEditMode()
+                sendSignal("Entering edit mode")
+            }
         }
 
         btnRefresh.setOnClickListener {
@@ -130,6 +164,18 @@ class MainActivity : AppCompatActivity() {
     private fun sendSignal(code: String) {
         // Use Broadlink API to send the signal
         Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun enterEditMode() {
+        editControls.visibility = View.VISIBLE
+        isEditingMode = true
+        // todo
+    }
+
+    private fun exitEditMode() {
+        editControls.visibility = View.GONE
+        isEditingMode = false
+        // todo
     }
 
 }

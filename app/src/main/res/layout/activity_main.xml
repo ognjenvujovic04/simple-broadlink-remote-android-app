@@ -5,6 +5,38 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
+    <!-- Add edit controls at bottom (initially hidden) -->
+    <LinearLayout
+        android:id="@+id/editControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:padding="16dp"
+        android:background="@android:color/black">
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/save"
+            android:background="@drawable/circle_background"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:background="@drawable/circle_background"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
     <!-- Refresh Button (Left Side) -->
     <ImageButton
     android:id="@+id/btnRefresh"
@@ -36,8 +68,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="20dp">
 
         <ImageView
@@ -45,62 +77,62 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginBottom="10dp"
-            android:contentDescription="@string/image_that_will_be_used_as_a_button"
-            android:src="@drawable/sportklub_logo"
             android:background="#AB1A1B"
+            android:clickable="true"
+            android:contentDescription="@string/image_that_will_be_used_as_a_button"
+            android:focusable="true"
             android:foreground="@drawable/border_white_main"
             android:scaleType="fitCenter"
-            android:clickable="true"
-            android:focusable="true" />
+            android:src="@drawable/sportklub_logo" />
 
         <ImageView
             android:id="@+id/btnChannel2"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginBottom="10dp"
-            android:contentDescription="@string/image_that_will_be_used_as_a_button"
-            android:src="@drawable/arenasport_logo_bg"
-            android:foreground="@drawable/border_white_main"
             android:background="#03A9F5"
-            android:scaleType="fitCenter"
             android:clickable="true"
-            android:focusable="true" />
+            android:contentDescription="@string/image_that_will_be_used_as_a_button"
+            android:focusable="true"
+            android:foreground="@drawable/border_white_main"
+            android:scaleType="fitCenter"
+            android:src="@drawable/arenasport_logo_bg" />
 
         <ImageView
             android:id="@+id/btnChannel3"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginBottom="10dp"
-            android:contentDescription="@string/image_that_will_be_used_as_a_button"
-            android:src="@drawable/bn_logo"
-            android:foreground="@drawable/border_white_main"
             android:background="#FFF"
-            android:scaleType="fitCenter"
             android:clickable="true"
-            android:focusable="true" />
+            android:contentDescription="@string/image_that_will_be_used_as_a_button"
+            android:focusable="true"
+            android:foreground="@drawable/border_white_main"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bn_logo" />
 
         <ImageView
             android:id="@+id/btnChannel4"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginBottom="10dp"
-            android:contentDescription="@string/image_that_will_be_used_as_a_button"
-            android:src="@drawable/rts_logo"
             android:background="#CDC3C4"
+            android:clickable="true"
+            android:contentDescription="@string/image_that_will_be_used_as_a_button"
+            android:focusable="true"
             android:foreground="@drawable/border_white_main"
             android:scaleType="fitCenter"
-            android:clickable="true"
-            android:focusable="true" />
+            android:src="@drawable/rts_logo" />
 
         <Button
             android:id="@+id/btnChannel5"
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:text="@string/channel_5"
-            android:textSize="24sp"
             android:background="#9B33FF"
             android:foreground="@drawable/border_white_main"
-            android:textColor="#FFFFFF" />
+            android:text="@string/channel_5"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
     </LinearLayout>
 
     <!-- Overlay (covers the entire screen) -->
