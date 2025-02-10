@@ -23,9 +23,9 @@ class PopupManager(private val context: Context, private val overlay: View, priv
 
     fun showSkPopup(anchorView: View) {
         showPopup(anchorView, R.layout.popup_sk, mapOf(
-            R.id.popupChannel1 to "SK1",
-            R.id.popupChannel2 to "SK2",
-            R.id.popupChannel3 to "SK3"
+            R.id.sportklub1 to "SK1",
+            R.id.sportklub2 to "SK2",
+            R.id.sportklub3 to "SK3"
         ))
     }
 
