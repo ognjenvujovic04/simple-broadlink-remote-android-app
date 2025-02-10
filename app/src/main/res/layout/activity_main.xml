@@ -7,9 +7,10 @@
 
     <!-- Refresh Button (Left Side) -->
     <ImageButton
-        android:id="@+id/btnRefresh"
-        android:layout_width="72dp"
+    android:id="@+id/btnRefresh"
+    android:layout_width="72dp"
     android:layout_height="72dp"
+    android:importantForAccessibility="no"
     android:background="@drawable/circle_background"
     android:src="@drawable/refresh_icon"
     android:clickable="true"
@@ -19,9 +20,10 @@
 
     <!-- On/Off Button (Right Side) -->
     <ImageButton
-        android:id="@+id/btnOnOff"
-        android:layout_width="72dp"
+    android:id="@+id/btnOnOff"
+    android:layout_width="72dp"
     android:layout_height="72dp"
+    android:importantForAccessibility="no"
     android:background="@drawable/circle_background"
     android:src="@drawable/power_icon"
     android:clickable="true"

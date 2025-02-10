@@ -20,12 +20,13 @@ import com.github.mob41.blapi.mac.Mac
 
 class MainActivity : AppCompatActivity() {
     private lateinit var popupManager: PopupManager
+    private lateinit var broadlinkManager: BroadlinkManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // nisam siguran da li je potrebno
+        // Not sure if it is necessary
 //        // Request necessary permissions at runtime
 //        requestPermissions()
 //
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
         val overlay: View = findViewById(R.id.overlay)
         popupManager = PopupManager(this, overlay, ::sendSignal)
+        // todo real address of the file
+        broadlinkManager = BroadlinkManager("ir_codes")
 
         // Initialize the top buttons
         val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
@@ -108,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("BroadLink", "Starting device discovery...")
 
-                val device = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"));
+                val device = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"))
                 device.auth()
 
                 val success: Boolean = device.enterLearning()

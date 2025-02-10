@@ -1,23 +1,24 @@
 package com.ognjen.broadlinkremote
 
-import android.content.Context
+import android.util.Base64
 import android.util.Log
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.io.File
 
-class BroadlinkManager(private val context: Context) {
+class BroadlinkManager(filePath: String) {
 
     private var broadlinkDevice: RM2Device? = null
     private val irCodes = mutableMapOf<String, ByteArray>()
     private val gson = Gson()
-    private val irCodesFile = File(context.filesDir, "ir_codes.json")
+    private val irCodesFile = File(filePath)
 
     // Initialize the Broadlink device
     fun initialize(): Boolean {
         return try {
-            broadlinkDevice = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"));
+            broadlinkDevice = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"))
             val authSuccess = broadlinkDevice?.auth() ?: false // Ensure auth() returns a Boolean
             loadIRCodes()
             authSuccess
@@ -29,7 +30,7 @@ class BroadlinkManager(private val context: Context) {
 
     // Enter learning mode
     fun enterLearningMode(channelId: String): Boolean {
-        var retValue = true
+        var retValue: Boolean
 
         try {
             broadlinkDevice?.enterLearning()
@@ -51,25 +52,36 @@ class BroadlinkManager(private val context: Context) {
     // Save IR codes to a file
     private fun saveIRCodes() {
         try {
-            val json = gson.toJson(irCodes)
+            // Convert each ByteArray to a Base64 string
+            val encodedCodes = irCodes.mapValues { entry -> Base64.encodeToString(entry.value, Base64.DEFAULT) }
+            val json = gson.toJson(encodedCodes)
             irCodesFile.writeText(json)
         } catch (e: Exception) {
             Log.e("BroadLink", "Error saving IR codes: ${e.message}", e)
         }
     }
 
+    // Load IR codes from file
     private fun loadIRCodes() {
         try {
             if (irCodesFile.exists()) {
                 val json = irCodesFile.readText()
-                val loadedCodes = gson.fromJson(json, Map::class.java) as Map<String, ByteArray>
+
+                // Define the type as Map<String, String> (Base64 encoded strings)
+                val type = object : TypeToken<Map<String, String>>() {}.type
+                val loadedCodes: Map<String, String> = gson.fromJson(json, type)
+
                 irCodes.clear()
-                irCodes.putAll(loadedCodes)
+                loadedCodes.forEach { (key, value) ->
+                    // Decode Base64 string back to ByteArray
+                    irCodes[key] = Base64.decode(value, Base64.DEFAULT)
+                }
             }
         } catch (e: Exception) {
             Log.e("BroadLink", "Error loading IR codes: ${e.message}", e)
         }
     }
+
 
     // Send an IR code for a specific channel todo
     fun sendIRCode(channelId: String): Boolean {
