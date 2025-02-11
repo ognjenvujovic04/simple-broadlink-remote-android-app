@@ -2,14 +2,14 @@ package com.ognjen.broadlinkremote
 
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 
 class EditPopup(
     private val context: Context,
@@ -32,12 +32,10 @@ class EditPopup(
             title.text = "Edit Channel $channelId Mappings"
 
             try {
-                // Get current mappings for the channel
                 val currentCodes = broadlinkManager.getButtonMappings(channelId)
                 val codesAdapter = IRCodesAdapter(context, currentCodes.toMutableList())
                 mappingsList.adapter = codesAdapter
 
-                // Add new code button click handler
                 btnAddNew.setOnClickListener {
                     try {
                         showCodeSelectionDialog(codesAdapter, channelId)
@@ -47,7 +45,6 @@ class EditPopup(
                     }
                 }
 
-                // Save changes button click handler
                 btnSave.setOnClickListener {
                     try {
                         broadlinkManager.updateButtonMapping(channelId, codesAdapter.getCodes())
@@ -81,51 +78,59 @@ class EditPopup(
 
             val codesList = dialog.findViewById<ListView>(R.id.codesList)
 
-            try {
-                // Get all available IR codes
-                val allCodes = broadlinkManager.getKnownRemoteButtons().toList()
-                val codesAdapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, allCodes)
-                codesList.adapter = codesAdapter
-
-                // Add learn new code button
-                val btnLearn = Button(context)
-                btnLearn.text = "Learn New Code"
-                btnLearn.setOnClickListener {
-                    try {
-                        showLearnNewCodeDialog(adapter, channelId)
-                    } catch (e: Exception) {
-                        Log.e("BroadlinkError", "Error showing learn code dialog: ${e.message}", e)
-                        Toast.makeText(context, "Failed to start learning mode", Toast.LENGTH_SHORT).show()
-                    }
+            fun refreshCodesList() {
+                try {
+                    val allCodes = broadlinkManager.getKnownRemoteButtons().toList()
+                    val codesAdapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, allCodes)
+                    codesList.adapter = codesAdapter
+                } catch (e: Exception) {
+                    Log.e("BroadlinkError", "Error refreshing codes list: ${e.message}", e)
+                    Toast.makeText(context, "Failed to refresh codes list", Toast.LENGTH_SHORT).show()
                 }
-                codesList.addFooterView(btnLearn)
-
-                // Handle code selection
-                codesList.setOnItemClickListener { _, _, position, _ ->
-                    try {
-                        if (position < allCodes.size) {
-                            adapter.addCode(allCodes[position])
-                            dialog.dismiss()
-                        }
-                    } catch (e: Exception) {
-                        Log.e("BroadlinkError", "Error selecting code: ${e.message}", e)
-                        Toast.makeText(context, "Failed to select code", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                dialog.show()
-            } catch (e: Exception) {
-                Log.e("BroadlinkError", "Error setting up code selection dialog: ${e.message}", e)
-                Toast.makeText(context, "Failed to load available codes", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
             }
+
+            // Initial list population
+            refreshCodesList()
+
+            // Add learn new code button
+            val btnLearn = Button(context)
+            btnLearn.text = "Learn New Code"
+            btnLearn.setOnClickListener {
+                try {
+                    showLearnNewCodeDialog { success ->
+                        if (success) {
+                            refreshCodesList() // Refresh the list after successful learning
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("BroadlinkError", "Error showing learn code dialog: ${e.message}", e)
+                    Toast.makeText(context, "Failed to start learning mode", Toast.LENGTH_SHORT).show()
+                }
+            }
+            codesList.addFooterView(btnLearn)
+
+            // Handle code selection
+            codesList.setOnItemClickListener { _, _, position, _ ->
+                try {
+                    val allCodes = broadlinkManager.getKnownRemoteButtons().toList()
+                    if (position < allCodes.size) {
+                        adapter.addCode(allCodes[position])
+                        dialog.dismiss()
+                    }
+                } catch (e: Exception) {
+                    Log.e("BroadlinkError", "Error selecting code: ${e.message}", e)
+                    Toast.makeText(context, "Failed to select code", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            dialog.show()
         } catch (e: Exception) {
             Log.e("BroadlinkError", "Fatal error showing code selection: ${e.message}", e)
             Toast.makeText(context, "Failed to open code selection", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showLearnNewCodeDialog(adapter: IRCodesAdapter, channelId: String) {
+    private fun showLearnNewCodeDialog(onLearnComplete: (Boolean) -> Unit) {
         try {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Learn New IR Code")
@@ -139,27 +144,31 @@ class EditPopup(
                     val codeName = input.text.toString()
                     if (codeName.isNotEmpty()) {
                         if (broadlinkManager.enterLearningModeTest(codeName)) {
-                            adapter.addCode(codeName)
                             Toast.makeText(context, "Code learned successfully", Toast.LENGTH_SHORT).show()
+                            onLearnComplete(true)
                         } else {
                             Toast.makeText(context, "Failed to learn code", Toast.LENGTH_SHORT).show()
+                            onLearnComplete(false)
                         }
                     }
                     dialog.dismiss()
                 } catch (e: Exception) {
                     Log.e("BroadlinkError", "Error during learning mode: ${e.message}", e)
                     Toast.makeText(context, "Error during learning mode", Toast.LENGTH_SHORT).show()
+                    onLearnComplete(false)
                 }
             }
 
             builder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
+                onLearnComplete(false)
             }
 
             builder.show()
         } catch (e: Exception) {
             Log.e("BroadlinkError", "Fatal error showing learn dialog: ${e.message}", e)
             Toast.makeText(context, "Failed to start learning mode", Toast.LENGTH_SHORT).show()
+            onLearnComplete(false)
         }
     }
 
