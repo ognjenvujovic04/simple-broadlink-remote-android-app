@@ -200,13 +200,35 @@ class MainActivity : AppCompatActivity() {
     private fun enterEditMode() {
         editControls.visibility = View.VISIBLE
         isEditingMode = true
-        // todo
+
+        // Change all buttons' borders to blue
+        val buttons = listOf(
+            findViewById<Button>(R.id.btnChannel5),
+            findViewById<ImageView>(R.id.btnChannel1),
+            findViewById<ImageView>(R.id.btnChannel2),
+            findViewById<ImageView>(R.id.btnChannel3),
+            findViewById<ImageView>(R.id.btnChannel4)
+        )
+
+        buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_main) }
+
     }
 
     private fun exitEditMode() {
         editControls.visibility = View.GONE
         isEditingMode = false
-        // todo
+
+        // Restore original white border
+        val buttons = listOf(
+            findViewById<Button>(R.id.btnChannel5),
+            findViewById<ImageView>(R.id.btnChannel1),
+            findViewById<ImageView>(R.id.btnChannel2),
+            findViewById<ImageView>(R.id.btnChannel3),
+            findViewById<ImageView>(R.id.btnChannel4)
+        )
+
+        buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_main) }
+
     }
 
 }
