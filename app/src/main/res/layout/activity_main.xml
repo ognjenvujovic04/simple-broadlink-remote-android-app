@@ -39,30 +39,30 @@
 
     <!-- Refresh Button (Left Side) -->
     <ImageButton
-    android:id="@+id/btnRefresh"
-    android:layout_width="72dp"
-    android:layout_height="72dp"
-    android:importantForAccessibility="no"
-    android:background="@drawable/sync_background"
-    android:src="@drawable/sync_icon"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp" />
+        android:id="@+id/btnRefresh"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:importantForAccessibility="no"
+        android:background="@drawable/sync_background"
+        android:src="@drawable/sync_icon"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
 
     <!-- On/Off Button (Right Side) -->
     <ImageButton
-    android:id="@+id/btnOnOff"
-    android:layout_width="72dp"
-    android:layout_height="72dp"
-    android:importantForAccessibility="no"
-    android:src="@drawable/power_icon"
-    android:background="@drawable/power_background"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_marginEnd="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_alignParentEnd="true" /> <!-- Align to the right side -->
+        android:id="@+id/btnOnOff"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/power_icon"
+        android:background="@drawable/power_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true" /> <!-- Align to the right side -->
 
     <!-- Main content (channel buttons) -->
 

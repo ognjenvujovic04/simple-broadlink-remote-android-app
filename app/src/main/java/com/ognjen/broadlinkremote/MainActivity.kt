@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editControls: LinearLayout
     private lateinit var btnSave: Button
     private lateinit var btnCancel: Button
+    private lateinit var btnOnOff: ImageButton
+    private lateinit var btnRefresh: ImageButton
     private val handler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,6 +51,11 @@ class MainActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
         btnCancel = findViewById(R.id.btnCancel)
 
+        // Initialize the top buttons
+        btnOnOff = findViewById(R.id.btnOnOff)
+        btnRefresh = findViewById(R.id.btnRefresh)
+
+
         btnSave.setOnClickListener {
             broadlinkManager.saveIRCodes()
             exitEditMode()
@@ -63,10 +70,6 @@ class MainActivity : AppCompatActivity() {
         popupManager = PopupManager(this, overlay, ::sendSignal)
         // todo real address of the file
         broadlinkManager = BroadlinkManager("ir_codes")
-
-        // Initialize the top buttons
-        val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
-        val btnRefresh: ImageButton = findViewById(R.id.btnRefresh)
 
         btnOnOff.setOnClickListener {
                 sendSignal("power")
@@ -212,7 +215,10 @@ class MainActivity : AppCompatActivity() {
 
         buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_main) }
 
-    }
+        btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_circle)
+        btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_circle)
+
+}
 
     private fun exitEditMode() {
         editControls.visibility = View.GONE
@@ -229,6 +235,8 @@ class MainActivity : AppCompatActivity() {
 
         buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_main) }
 
+        btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
+        btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
     }
 
 }
