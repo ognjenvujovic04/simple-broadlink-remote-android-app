@@ -8,4 +8,5 @@
     <string name="image_that_will_be_used_as_a_button">Image that will be used as a button</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="edit_mode_message">Editing mode is active. Tap a button to edit its ir codes.</string>
 </resources>

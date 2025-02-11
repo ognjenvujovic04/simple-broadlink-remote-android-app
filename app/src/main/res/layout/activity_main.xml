@@ -10,31 +10,50 @@
         android:id="@+id/editControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:padding="16dp"
         android:background="@android:color/black">
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="@string/save"
-            android:background="@drawable/border_white_main"
-            android:textColor="#FFFFFF"
-            android:layout_marginEnd="8dp"/>
+        <!-- Message to indicate editing mode -->
+        <TextView
+            android:id="@+id/editingModeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_mode_message"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:visibility="visible"/>
 
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="@string/cancel"
-            android:background="@drawable/border_white_main"
-            android:textColor="#FFFFFF"
-            android:layout_marginStart="8dp"/>
+        <!-- Buttons for saving or canceling changes -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/save"
+                android:background="@drawable/border_white_main"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/cancel"
+                android:background="@drawable/border_white_main"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Refresh Button (Left Side) -->
