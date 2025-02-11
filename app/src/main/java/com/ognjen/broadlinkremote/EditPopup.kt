@@ -81,7 +81,11 @@ class EditPopup(
             fun refreshCodesList() {
                 try {
                     val allCodes = broadlinkManager.getKnownRemoteButtons().toList()
-                    val codesAdapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, allCodes)
+                    val codesAdapter = ArrayAdapter(
+                        context,
+                        R.layout.item_code_selection,
+                        allCodes
+                    )
                     codesList.adapter = codesAdapter
                 } catch (e: Exception) {
                     Log.e("BroadlinkError", "Error refreshing codes list: ${e.message}", e)
