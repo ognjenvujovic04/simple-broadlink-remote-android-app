@@ -8,87 +8,86 @@
     android:elevation="8dp"
     android:background="@drawable/popup_background">
 
-<ImageView
-android:id="@+id/arena1"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena1_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
+    <ImageView
+        android:id="@+id/arena1"
+        android:layout_width="240dp"
 
-<ImageView
-android:id="@+id/arena2"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena2_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena1_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
-<ImageView
-android:id="@+id/arena3"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena3_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
+    <ImageView
+        android:id="@+id/arena2"
+        android:layout_width="240dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena2_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
-
-<ImageView
-android:id="@+id/arena1premium"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena1p_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
+    <ImageView
+        android:id="@+id/arena3"
+        android:layout_width="240dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena3_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
 
-<ImageView
-android:id="@+id/arena2premium"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena2p_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
+    <ImageView
+        android:id="@+id/arena1premium"
+        android:layout_width="240dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena1p_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
 
-<ImageView
-android:id="@+id/arena3premium"
-android:layout_width="240dp"
-android:layout_height="92dp"
-android:layout_marginBottom="8dp"
-android:importantForAccessibility="no"
-android:src="@drawable/arena3p_logo"
-android:background="#000"
-android:foreground ="@drawable/border_white"
-android:scaleType="fitCenter"
-android:clickable="true"
-android:focusable="true" />
-    
-    
+    <ImageView
+        android:id="@+id/arena2premium"
+        android:layout_width="240dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena2p_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
+
+
+    <ImageView
+        android:id="@+id/arena3premium"
+        android:layout_width="240dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arena3p_logo"
+        android:background="#000"
+        android:foreground ="@drawable/border_white"
+        android:scaleType="fitCenter"
+        android:clickable="true"
+        android:focusable="true" />
 
     </LinearLayout>
