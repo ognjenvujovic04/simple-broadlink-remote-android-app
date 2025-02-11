@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,16 +58,16 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize broadlinkManager
         // todo real address of the file
-        broadlinkManager = BroadlinkManager("ir_codes")
+        broadlinkManager = BroadlinkManager(this)
 
 
         btnSave.setOnClickListener {
-            broadlinkManager.saveIRCodes()
+            broadlinkManager.saveBtnIRCodes()
             exitEditMode()
         }
 
         btnCancel.setOnClickListener {
-            broadlinkManager.loadIRCodes()  // Reload original codes
+            broadlinkManager.loadBtnIRCodes()
             exitEditMode()
         }
 
@@ -136,7 +137,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.btnChannel2 -> popupManager.showArenaPopup(view)
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
-                    R.id.btnChannel5 -> discoverBroadlinkDevices()
+                    R.id.btnChannel5 -> {
+                        broadlinkManager.testIRCodeLoading()
+                    }
                 }
             }
         }
@@ -207,7 +210,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun enterEditMode() {
         editControls.visibility = View.VISIBLE
         isEditingMode = true
@@ -246,5 +248,6 @@ class MainActivity : AppCompatActivity() {
         btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
         btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
     }
+
 
 }
