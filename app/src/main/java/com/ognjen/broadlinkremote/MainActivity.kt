@@ -1,6 +1,7 @@
 package com.ognjen.broadlinkremote
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
@@ -14,7 +15,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -28,12 +28,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var popupManager: PopupManager
     private lateinit var broadlinkManager: BroadlinkManager
     private lateinit var editControls: LinearLayout
-    private lateinit var txtEditMode: TextView
     private lateinit var btnSave: Button
     private lateinit var btnCancel: Button
-    private var editModeRunnable: Runnable? = null
     private val handler = Handler(Looper.getMainLooper())
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -69,17 +68,49 @@ class MainActivity : AppCompatActivity() {
         val btnOnOff: ImageButton = findViewById(R.id.btnOnOff)
         val btnRefresh: ImageButton = findViewById(R.id.btnRefresh)
 
-// Add regular click listener for power functionality
         btnOnOff.setOnClickListener {
                 sendSignal("power")
-            if (isEditingMode){
-                exitEditMode()
-                sendSignal("Exiting edit mode")
-            } else {
-                enterEditMode()
-                sendSignal("Entering edit mode")
-            }
         }
+
+        // 5s holding functionality with icon change after 1.5s
+        btnOnOff.setOnTouchListener(object : View.OnTouchListener {
+            private val editModeDuration = 5000L // 5 seconds to enter edit mode
+            private val iconChangeDuration = 1000L // 1.5 seconds to change icon
+            private var isHeld = false
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when (event?.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        isHeld = true
+                        handler.postDelayed({
+                            if (isHeld) {
+                                btnOnOff.setImageResource(R.drawable.settings_icon)
+                                btnOnOff.setBackgroundResource(R.drawable.settings_background)
+                            }
+                        }, iconChangeDuration)
+
+                        handler.postDelayed({
+                            if (isHeld) {
+                                // Reset before entering edit mode
+                                btnOnOff.setImageResource(R.drawable.power_icon)
+                                btnOnOff.setBackgroundResource(R.drawable.power_background)
+                                enterEditMode()
+                                Toast.makeText(this@MainActivity, "Entered Edit Mode", Toast.LENGTH_SHORT).show()
+                            }
+                        }, editModeDuration)
+                    }
+
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        isHeld = false
+                        handler.removeCallbacksAndMessages(null)
+                        // Reset icon on release
+                        btnOnOff.setImageResource(R.drawable.power_icon)
+                        btnOnOff.setBackgroundResource(R.drawable.power_background)
+                    }
+                }
+                return false
+            }
+        })
 
         btnRefresh.setOnClickListener {
             Toast.makeText(this, "Refresh clicked!", Toast.LENGTH_SHORT).show()
