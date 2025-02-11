@@ -22,7 +22,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="@string/save"
-            android:background="@drawable/circle_background"
+            android:background="@drawable/border_white_main"
             android:textColor="#FFFFFF"
             android:layout_marginEnd="8dp"/>
 
@@ -32,7 +32,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:background="@drawable/circle_background"
+            android:background="@drawable/border_white_main"
             android:textColor="#FFFFFF"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
@@ -43,8 +43,8 @@
     android:layout_width="72dp"
     android:layout_height="72dp"
     android:importantForAccessibility="no"
-    android:background="@drawable/circle_background"
-    android:src="@drawable/refresh_icon"
+    android:background="@drawable/sync_background"
+    android:src="@drawable/sync_icon"
     android:clickable="true"
     android:focusable="true"
     android:layout_marginStart="16dp"
@@ -56,8 +56,8 @@
     android:layout_width="72dp"
     android:layout_height="72dp"
     android:importantForAccessibility="no"
-    android:background="@drawable/circle_background"
     android:src="@drawable/power_icon"
+    android:background="@drawable/power_background"
     android:clickable="true"
     android:focusable="true"
     android:layout_marginEnd="16dp"
@@ -65,6 +65,7 @@
     android:layout_alignParentEnd="true" /> <!-- Align to the right side -->
 
     <!-- Main content (channel buttons) -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

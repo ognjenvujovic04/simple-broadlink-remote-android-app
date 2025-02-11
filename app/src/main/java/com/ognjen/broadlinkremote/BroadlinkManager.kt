@@ -29,7 +29,7 @@ class BroadlinkManager(filePath: String) {
     }
 
     // Enter learning mode
-    fun enterLearningMode(channelId: String): Boolean {
+    fun enterLearningMode(remoteButton: String): Boolean {
         var retValue: Boolean
 
         try {
@@ -37,7 +37,7 @@ class BroadlinkManager(filePath: String) {
 
             val irCode = broadlinkDevice?.checkData()
             if (irCode != null) {
-                irCodes[channelId] = irCode
+                irCodes[remoteButton] = irCode
                 saveIRCodes()
                 retValue = true
             } else {
@@ -50,7 +50,7 @@ class BroadlinkManager(filePath: String) {
     }
 
     // Save IR codes to a file
-    private fun saveIRCodes() {
+    fun saveIRCodes() {
         try {
             // Convert each ByteArray to a Base64 string
             val encodedCodes = irCodes.mapValues { entry -> Base64.encodeToString(entry.value, Base64.DEFAULT) }
@@ -62,7 +62,7 @@ class BroadlinkManager(filePath: String) {
     }
 
     // Load IR codes from file
-    private fun loadIRCodes() {
+    fun loadIRCodes() {
         try {
             if (irCodesFile.exists()) {
                 val json = irCodesFile.readText()
