@@ -21,13 +21,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
     private var isEditingMode = false
     private lateinit var popupManager: PopupManager
     private lateinit var broadlinkManager: BroadlinkManager
+    private lateinit var editPopup: EditPopup
     private lateinit var editControls: LinearLayout
     private lateinit var btnSave: Button
     private lateinit var btnCancel: Button
@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         // Initialize broadlinkManager
         // todo real address of the file
         broadlinkManager = BroadlinkManager(this)
+
+        editPopup = EditPopup(this, broadlinkManager)
 
 
         btnSave.setOnClickListener {
@@ -138,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
                     R.id.btnChannel5 -> {
-                        broadlinkManager.testIRCodeLoading()
+                        editPopup.showEditPopup("btn-1")
                     }
                 }
             }
@@ -248,6 +250,7 @@ class MainActivity : AppCompatActivity() {
         btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
         btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
     }
+
 
 
 }
