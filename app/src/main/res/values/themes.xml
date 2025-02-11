@@ -10,9 +10,14 @@
 
     <!-- Dark Theme -->
     <style name="Theme.BroadlinkRemote.Dark" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
+    <style name="Theme.MyApp.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/my_splash_background</item>
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
+
 </resources>
