@@ -80,6 +80,11 @@ class MainActivity : AppCompatActivity() {
             handleClick(this, "On/Off", broadlinkManager)
         }
 
+        btnOnOff.setOnLongClickListener(View.OnLongClickListener {
+            Toast.makeText(this, "Hold for 5 seconds for editing mode", Toast.LENGTH_SHORT).show()
+            true
+        })
+
         // 5s holding functionality with icon change after 1.5s
         btnOnOff.setOnTouchListener(object : View.OnTouchListener {
             private val editModeDuration = 5000L // 5 seconds to enter edit mode
