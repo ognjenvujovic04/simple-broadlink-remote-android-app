@@ -77,11 +77,11 @@ class MainActivity : AppCompatActivity() {
         popupManager = PopupManager(this, overlay, ::handleClick, broadlinkManager)
 
         btnOnOff.setOnClickListener {
-            handleClick(this, "On/Off", broadlinkManager)
+            handleClick(this, "Power", broadlinkManager)
         }
 
         btnOnOff.setOnLongClickListener(View.OnLongClickListener {
-            Toast.makeText(this, "Hold for 5 seconds for editing mode", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Hold for 5 seconds to enter mode", Toast.LENGTH_SHORT).show()
             true
         })
 
@@ -209,8 +209,7 @@ class MainActivity : AppCompatActivity() {
     // Handles button clicks
     private fun handleClick(context: Context, buttonId: String, broadlinkManager: BroadlinkManager) {
         if (isEditingMode){
-            // todo, placehodler for editing popup
-            Toast.makeText(context, "Editing $buttonId", Toast.LENGTH_SHORT).show()
+            editPopup.showEditPopup(buttonId)
         } else {
             // todo, placeholder for broadlinkManager
             Toast.makeText(context, "$buttonId clicked!", Toast.LENGTH_SHORT).show()
