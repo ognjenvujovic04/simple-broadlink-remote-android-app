@@ -11,7 +11,8 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="3dp"
-                android:color="#FFF" />
+                android:color="@color/white" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 </layer-list>
