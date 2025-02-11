@@ -12,7 +12,7 @@
             <stroke
                 android:width="3dp"
                 android:color="#2196F3" />
-            <corners android:radius="20dp" /> <!-- Rounded corners -->
+            <corners android:radius="18dp" />
         </shape>
     </item>
 </layer-list>

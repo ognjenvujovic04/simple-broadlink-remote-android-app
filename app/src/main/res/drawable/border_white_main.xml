@@ -12,7 +12,7 @@
             <stroke
                 android:width="3dp"
                 android:color="@color/white" />
-            <corners android:radius="20dp" />
+            <corners android:radius="18dp" />
         </shape>
     </item>
 </layer-list>
