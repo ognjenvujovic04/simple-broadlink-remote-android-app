@@ -11,7 +11,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 
-class PopupManager(private val context: Context, private val overlay: View, private val sendSignal: (String) -> Unit) {
+class PopupManager(
+    private val context: Context,
+    private val overlay: View,
+    private val handleClick: (Context, String, BroadlinkManager) -> Unit,
+    private val broadlinkManager: BroadlinkManager) {
 
     fun showArenaPopup(anchorView: View) {
         showPopup(anchorView, R.layout.popup_arena, mapOf(
@@ -48,7 +52,7 @@ class PopupManager(private val context: Context, private val overlay: View, priv
 
         channels.forEach { (viewId, signal) ->
             popupView.findViewById<ImageView>(viewId).setOnClickListener {
-                sendSignal(signal)
+                handleClick(context, signal, broadlinkManager)
                 popupWindow.dismiss()
             }
         }

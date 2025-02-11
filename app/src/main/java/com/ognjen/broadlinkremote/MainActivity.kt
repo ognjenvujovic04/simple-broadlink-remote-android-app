@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         btnOnOff = findViewById(R.id.btnOnOff)
         btnRefresh = findViewById(R.id.btnRefresh)
 
+        // Initialize broadlinkManager
+        // todo real address of the file
+        broadlinkManager = BroadlinkManager("ir_codes")
+
 
         btnSave.setOnClickListener {
             broadlinkManager.saveIRCodes()
@@ -67,18 +71,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         val overlay: View = findViewById(R.id.overlay)
-        popupManager = PopupManager(this, overlay, ::sendSignal)
-        // todo real address of the file
-        broadlinkManager = BroadlinkManager("ir_codes")
+        popupManager = PopupManager(this, overlay, ::handleClick, broadlinkManager)
 
         btnOnOff.setOnClickListener {
-                sendSignal("power")
+            handleClick(this, "On/Off", broadlinkManager)
         }
 
         // 5s holding functionality with icon change after 1.5s
         btnOnOff.setOnTouchListener(object : View.OnTouchListener {
             private val editModeDuration = 5000L // 5 seconds to enter edit mode
-            private val iconChangeDuration = 1000L // 1.5 seconds to change icon
+            private val iconChangeDuration = 1000L // 1 second to change icon
             private var isHeld = false
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -116,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         btnRefresh.setOnClickListener {
-            Toast.makeText(this, "Refresh clicked!", Toast.LENGTH_SHORT).show()
+            handleClick(this, "Refresh", broadlinkManager)
         }
 
         val views = listOf(
@@ -132,8 +134,8 @@ class MainActivity : AppCompatActivity() {
                 when (view.id) {
                     R.id.btnChannel1 -> popupManager.showSkPopup(view)
                     R.id.btnChannel2 -> popupManager.showArenaPopup(view)
-                    R.id.btnChannel3 -> Toast.makeText(this, "Bn clicked!", Toast.LENGTH_SHORT).show()
-                    R.id.btnChannel4 -> Toast.makeText(this, "Rts clicked!", Toast.LENGTH_SHORT).show()
+                    R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
+                    R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
                     R.id.btnChannel5 -> discoverBroadlinkDevices()
                 }
             }
@@ -194,11 +196,17 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-    // todo placeholder for broadlinkManager
-    private fun sendSignal(code: String) {
-        // Use Broadlink API to send the signal
-        Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
+    // Handles button clicks
+    private fun handleClick(context: Context, buttonId: String, broadlinkManager: BroadlinkManager) {
+        if (isEditingMode){
+            // todo, placehodler for editing popup
+            Toast.makeText(context, "Editing $buttonId", Toast.LENGTH_SHORT).show()
+        } else {
+            // todo, placeholder for broadlinkManager
+            Toast.makeText(context, "$buttonId clicked!", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun enterEditMode() {
         editControls.visibility = View.VISIBLE
