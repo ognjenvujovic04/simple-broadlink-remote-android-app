@@ -2,6 +2,8 @@ package com.ognjen.broadlinkremote
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,10 @@ class EditPopup(
         try {
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.dialog_edit_button)
+
+            dialog.window?.apply {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
 
             val title = dialog.findViewById<TextView>(R.id.title)
             val mappingsList = dialog.findViewById<ListView>(R.id.mappingsList)
@@ -68,6 +74,10 @@ class EditPopup(
         try {
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.popup_code_selection)
+
+            dialog.window?.apply {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
 
             val codesList = dialog.findViewById<ListView>(R.id.codesList)
 
