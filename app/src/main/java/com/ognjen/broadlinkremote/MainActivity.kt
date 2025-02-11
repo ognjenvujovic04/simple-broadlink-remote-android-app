@@ -140,8 +140,8 @@ class MainActivity : AppCompatActivity() {
         views.forEach { view ->
             view.setOnClickListener {
                 when (view.id) {
-                    R.id.btnChannel1 -> popupManager.showSkPopup(view)
-                    R.id.btnChannel2 -> popupManager.showArenaPopup(view)
+                    R.id.btnChannel1 -> popupManager.showSkPopup(view, isEditingMode)
+                    R.id.btnChannel2 -> popupManager.showArenaPopup(view, isEditingMode)
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
                     R.id.btnChannel5 -> {
