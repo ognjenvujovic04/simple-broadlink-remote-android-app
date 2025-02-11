@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:elevation="8dp"
-    android:background="#424242"
-    android:foreground ="@drawable/border_white">
+    android:background="@drawable/popup_background">
 
 <ImageView
 android:id="@+id/arena1"
