@@ -1,9 +1,7 @@
 package com.ognjen.broadlinkremote
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
@@ -17,7 +15,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
@@ -40,13 +37,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Not sure if it is necessary
-//        // Request necessary permissions at runtime
-//        requestPermissions()
-//
-//        // Enable multicast for BroadLink discovery
-//        enableMulticast()
 
         // Initialize edit controls
         editControls = findViewById(R.id.editControls)
@@ -154,32 +144,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Enable Wi-Fi multicast (needed for BroadLink discovery)
-    private fun enableMulticast() {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val multicastLock = wifiManager.createMulticastLock("BroadLinkDiscovery")
-        multicastLock.setReferenceCounted(true)
-        multicastLock.acquire()
-    }
-
-    private fun requestPermissions() {
-        val permissions = arrayOf(
-            Manifest.permission.ACCESS_WIFI_STATE,
-            Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_NETWORK_STATE
-        )
-
-        val permissionsNeeded = permissions.filter {
-            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if (permissionsNeeded.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(), 1)
-        }
-    }
-
-
     // Discover BroadLink devices on the network
     private fun discoverBroadlinkDevices() {
         val multicastLock = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
@@ -187,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         multicastLock.setReferenceCounted(true)
         multicastLock.acquire()
 
-        var success: Boolean = false
+        var success = false
 
         Thread {
             try {
@@ -201,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                 success = device.enterLearning()
                 Thread.sleep(3000)
 
-                var irCode = device.checkData()
+                val irCode = device.checkData()
                 Log.d("BroadlinkLog", "IR Code: $irCode")
 
 
