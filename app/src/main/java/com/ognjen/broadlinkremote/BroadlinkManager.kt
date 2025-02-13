@@ -47,33 +47,23 @@ class BroadlinkManager(private val context: Context) {
     }
 
     fun enterLearningMode(remoteButtonName: String): Boolean {
-        return try {
-            broadlinkDevice?.enterLearning()
-            val irCode = broadlinkDevice?.checkData()
+        var ret = false
+        Thread {
+            try {
+                broadlinkDevice?.enterLearning()
+                val irCode = broadlinkDevice?.checkData()
 
-            irCode?.let {
-                allIrCodes[remoteButtonName] = it
-                saveAllIRCodes()
-                true
-            } ?: false
-        } catch (e: Exception) {
-            Log.e("BroadlinkError", "Learning error: ${e.message}", e)
-            false
-        }
-    }
-
-    // enterLearningMode for testing without broadlink device
-    fun enterLearningModeTest(remoteButtonName: String): Boolean {
-        return try {
-            val irCode = "test".toByteArray()
-
-            allIrCodes[remoteButtonName] = irCode
-            saveAllIRCodes()
-            true
-        } catch (e: Exception) {
-            Log.e("BroadlinkError", "Learning error: ${e.message}", e)
-            false
-        }
+                irCode?.let {
+                    allIrCodes[remoteButtonName] = it
+                    saveAllIRCodes()
+                    ret = true
+                } ?: false
+            } catch (e: Exception) {
+                Log.e("BroadlinkError", "Learning error: ${e.message}", e)
+                ret = false
+            }
+        }.start()
+        return ret
     }
 
     fun saveAllIRCodes() {
@@ -166,71 +156,5 @@ class BroadlinkManager(private val context: Context) {
             false
         }
     }
-
-    fun testIRCodeStorage() {
-        val testButtonName = "test_power"
-        val testButtonId = "btn_1"
-        val testSequence = listOf(testButtonName, testButtonName)
-
-        // Step 1: Add a new IR code
-        if (enterLearningModeTest(testButtonName)) {
-            Log.d("BroadlinkTest", "Successfully learned and saved IR code for $testButtonName")
-        } else {
-            Log.e("BroadlinkTest", "Failed to learn IR code for $testButtonName")
-            return
-        }
-
-        // Step 2: Update button mapping
-        updateButtonMapping(testButtonId, testSequence)
-        Log.d("BroadlinkTest", "Updated button mapping: $testButtonId -> $testSequence")
-
-        // Step 3: Reload data to verify
-        loadAllIRCodes()
-        loadBtnIRCodes()
-
-        // Step 4: Log the loaded data
-        Log.d("BroadlinkTest", "Loaded IR Codes: $allIrCodes")
-        Log.d("BroadlinkTest", "Loaded Button Mappings: $btnIrCodes")
-
-        // Step 5: Verify if test data is correctly stored
-        if (allIrCodes.containsKey(testButtonName)) {
-            Log.d("BroadlinkTest", "IR code correctly stored for $testButtonName")
-        } else {
-            Log.e("BroadlinkTest", "IR code missing for $testButtonName")
-        }
-
-        if (btnIrCodes[testButtonId] == testSequence) {
-            Log.d("BroadlinkTest", "Button mapping correctly stored for $testButtonId")
-        } else {
-            Log.e("BroadlinkTest", "Button mapping incorrect for $testButtonId")
-        }
-    }
-
-    fun testIRCodeLoading() {
-        val testButtonName = "test_power"
-        val testButtonId = "btn_1"
-        val testSequence = listOf(testButtonName, testButtonName)
-
-        loadAllIRCodes()
-        loadBtnIRCodes()
-
-        // Step 4: Log the loaded data
-        Log.d("BroadlinkTest", "Loaded IR Codes: $allIrCodes")
-        Log.d("BroadlinkTest", "Loaded Button Mappings: $btnIrCodes")
-
-        // Step 5: Verify if test data is correctly stored
-        if (allIrCodes.containsKey(testButtonName)) {
-            Log.d("BroadlinkTest", "IR code correctly stored for $testButtonName")
-        } else {
-            Log.e("BroadlinkTest", "IR code missing for $testButtonName")
-        }
-
-        if (btnIrCodes[testButtonId] == testSequence) {
-            Log.d("BroadlinkTest", "Button mapping correctly stored for $testButtonId")
-        } else {
-            Log.e("BroadlinkTest", "Button mapping incorrect for $testButtonId")
-        }
-    }
-
 
 }
