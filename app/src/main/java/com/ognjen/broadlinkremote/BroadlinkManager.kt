@@ -5,6 +5,7 @@ import android.util.Base64
 import android.util.Log
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
+import com.github.mob41.blapi.pkt.cmd.rm2.SendDataCmdPayload
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -24,16 +25,25 @@ class BroadlinkManager(private val context: Context) {
     private val btnCodesFile = File(context.filesDir, "ir_codes/btn_mappings.json")
 
     fun initialize(): Boolean {
-        return try {
-            broadlinkDevice = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"))
-            val authSuccess = broadlinkDevice?.auth() ?: false
-            loadAllIRCodes()
-            loadBtnIRCodes()
-            authSuccess
-        } catch (e: Exception) {
-            Log.e("BroadlinkError", "Initialization error: ${e.message}", e)
-            false
-        }
+        var ret = false
+        Thread {
+            try {
+                val device = RM2Device("192.168.1.8", Mac("78:0f:77:17:ec:ee"))
+                device.auth()
+
+                broadlinkDevice = device
+                loadAllIRCodes()
+                loadBtnIRCodes()
+
+                ret = true
+
+            } catch (e: Exception) {
+                Log.e("BroadlinkError", "Initialization error: ${e.message}", e)
+                ret = false
+            }
+        }.start()
+
+        return ret
     }
 
     fun enterLearningMode(remoteButtonName: String): Boolean {
@@ -146,7 +156,7 @@ class BroadlinkManager(private val context: Context) {
             sequence.forEach { buttonName ->
                 allIrCodes[buttonName]?.let { code ->
                     // Todo send code to broadlink device
-                    // broadlinkDevice?.sendIRCode(code)
+                     broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
                     Log.d("BroadLink", "Sent code for $buttonName")
                 }
             }
