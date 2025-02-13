@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         btnRefresh.setOnClickListener {
+            // todo change the Broadlink paramerter (mtel or total)
             handleClick(this, "Refresh", broadlinkManager)
         }
 
@@ -145,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
                     R.id.btnChannel5 -> {
-                        editPopup.showEditPopup("btn-1")
+                        discoverBroadlinkDevices()
                     }
                 }
             }
@@ -185,25 +186,34 @@ class MainActivity : AppCompatActivity() {
         multicastLock.setReferenceCounted(true)
         multicastLock.acquire()
 
+        var success: Boolean = false
+
         Thread {
             try {
-                Log.d("BroadLink", "Starting device discovery...")
+                Log.d("BroadlinkLog", "Starting device discovery...")
 
-                Log.d("BroadLink", "Starting device discovery...")
+                Log.d("BroadlinkLog", "Starting device discovery...")
 
-                val device = RM2Device("192.168.1.3", Mac("78:0f:77:17:ec:ee"))
+                val device = RM2Device("192.168.1.8", Mac("78:0f:77:17:ec:ee"))
                 device.auth()
 
-                val success: Boolean = device.enterLearning()
-                Toast.makeText(this, "Enter Learning status: " + (if (success) "Success!" else "Failed!"), Toast.LENGTH_LONG).show()
+                success = device.enterLearning()
+                Thread.sleep(3000)
 
+                var irCode = device.checkData()
+                Log.d("BroadlinkLog", "IR Code: $irCode")
+
+                Log.d("BroadlinkLog", "Device discovery complete")
             } catch (e: Exception) {
-                Log.e("BroadLink", "Error discovering devices: ${e.message}", e)
+                Log.e("BroadlinkError", "Error discovering devices: ${e.message}", e)
                 runOnUiThread {
                     Toast.makeText(this, "Error discovering devices: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }.start()
+        Toast.makeText(this, "Enter Learning status: " + (if (success) "Success!" else "Failed!"), Toast.LENGTH_LONG).show()
+        Log.d("BroadlinkLog", "Enter Learning status: " + (if (success) "Success!" else "Failed!"))
+
     }
 
     // Handles button clicks
