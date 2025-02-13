@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.github.mob41.blapi.RM2Device
 import com.github.mob41.blapi.mac.Mac
+import com.github.mob41.blapi.pkt.cmd.rm2.SendDataCmdPayload
 
 
 class MainActivity : AppCompatActivity() {
@@ -202,6 +203,10 @@ class MainActivity : AppCompatActivity() {
 
                 var irCode = device.checkData()
                 Log.d("BroadlinkLog", "IR Code: $irCode")
+
+
+                device.sendCmdPkt(SendDataCmdPayload(irCode))
+                Log.d("BroadlinkLog", "IR Code sent")
 
                 Log.d("BroadlinkLog", "Device discovery complete")
             } catch (e: Exception) {
