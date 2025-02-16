@@ -118,7 +118,12 @@
             android:focusable="true"
             android:foreground="@drawable/border_white_main"
             android:scaleType="fitCenter"
-            android:src="@drawable/arenasport_logo_bg" />
+            android:src="@drawable/arenasport_logo_bg"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            />
+
+
 
         <ImageView
             android:id="@+id/btnChannel3"
