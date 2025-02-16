@@ -147,7 +147,7 @@ class EditPopup(
                 try {
                     val codeName = input.text.toString()
                     if (codeName.isNotEmpty()) {
-                        if (broadlinkManager.enterLearningModeTest(codeName)) {
+                        if (broadlinkManager.enterLearningMode(codeName)) {
                             Toast.makeText(context, "Code learned successfully", Toast.LENGTH_SHORT).show()
                             onLearnComplete(true)
                         } else {

@@ -2,7 +2,6 @@ package com.ognjen.broadlinkremote
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -50,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         // Initialize broadlinkManager
         // todo real address of the file
         broadlinkManager = BroadlinkManager(this)
+        broadlinkManager.initialize()
+
 
         editPopup = EditPopup(this, broadlinkManager)
 
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnOnOff.setOnLongClickListener(View.OnLongClickListener {
-            Toast.makeText(this, "Hold for 5 seconds to enter mode", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Hold for 5 seconds to enter editing mode", Toast.LENGTH_SHORT).show()
             true
         })
 
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),
             findViewById<ImageView>(R.id.btnChannel4),
-            findViewById<Button>(R.id.btnChannel5)
+//            findViewById<Button>(R.id.btnChannel5)
         )
 
         views.forEach { view ->
@@ -136,9 +137,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.btnChannel2 -> popupManager.showArenaPopup(view, isEditingMode)
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
-                    R.id.btnChannel5 -> {
-                        discoverBroadlinkDevices()
-                    }
+//                    R.id.btnChannel5 -> {
+//                        discoverBroadlinkDevices()
+//                    }
                 }
             }
         }
@@ -146,11 +147,6 @@ class MainActivity : AppCompatActivity() {
 
     // Discover BroadLink devices on the network
     private fun discoverBroadlinkDevices() {
-        val multicastLock = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
-            .createMulticastLock("multicastLock")
-        multicastLock.setReferenceCounted(true)
-        multicastLock.acquire()
-
         var success = false
 
         Thread {
@@ -201,7 +197,7 @@ class MainActivity : AppCompatActivity() {
 
         // Change all buttons' borders to blue
         val buttons = listOf(
-            findViewById<Button>(R.id.btnChannel5),
+//            findViewById<Button>(R.id.btnChannel5),
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),
@@ -221,7 +217,7 @@ class MainActivity : AppCompatActivity() {
 
         // Restore original white border
         val buttons = listOf(
-            findViewById<Button>(R.id.btnChannel5),
+//            findViewById<Button>(R.id.btnChannel5),
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),

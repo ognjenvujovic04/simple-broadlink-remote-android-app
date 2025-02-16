@@ -146,15 +146,15 @@
             android:scaleType="fitCenter"
             android:src="@drawable/rts_logo" />
 
-        <Button
-            android:id="@+id/btnChannel5"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:background="@drawable/rounded_channel5"
-            android:foreground="@drawable/border_white_main"
-            android:text="@string/channel_5"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+<!--        <Button-->
+<!--            android:id="@+id/btnChannel5"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="110dp"-->
+<!--            android:background="@drawable/rounded_channel5"-->
+<!--            android:foreground="@drawable/border_white_main"-->
+<!--            android:text="@string/channel_5"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:textSize="24sp" />-->
     </LinearLayout>
 
     <!-- Overlay (covers the entire screen) -->

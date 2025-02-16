@@ -51,6 +51,7 @@ class BroadlinkManager(private val context: Context) {
         Thread {
             try {
                 broadlinkDevice?.enterLearning()
+                Thread.sleep(3000)
                 val irCode = broadlinkDevice?.checkData()
 
                 irCode?.let {
@@ -63,6 +64,8 @@ class BroadlinkManager(private val context: Context) {
                 ret = false
             }
         }.start()
+        // Sleep to allow learning to complete
+        Thread.sleep(3000)
         return ret
     }
 
