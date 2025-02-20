@@ -1,7 +1,7 @@
 # Simple TV Remote for Elderly
 
 ## Project Overview
-An easy-to-use Android application designed specifically for elderly users, providing a straightforward TV remote experience with just 5 preset channels and integration with Broadlink device for remote control functionality.
+This app is currently in development and should not be used yet. It is a personal project designed for my grandfather, and many aspects, including UI elements and Broadlink integration, are still being refined. Some images are currently hardcoded and will be optimized in future updates.
 
 ## Features
 - Minimalist, large-button interface optimized for senior users
@@ -21,14 +21,19 @@ An easy-to-use Android application designed specifically for elderly users, prov
 3. Configure Broadlink device credentials
 4. Build and install on target device
 
-## Configuration
-- Customize channel list in `channels.xml`
-- Adjust Broadlink device settings in `BroadlinkConfig.java`
-
 ## Planned Improvements
 - Additional accessibility features
 - Customizable button sizes
 - More channel presets
+- 
+## Screenshots
+Below are two screenshots of the current UI:
+
+<p align="left">
+    <img src="assets/normal_mode.jpg" width="300" >&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="assets/edit_mode.jpg" width="300">
+</p>
+
 
 ## License
 MIT License
