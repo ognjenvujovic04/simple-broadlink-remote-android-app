@@ -25,7 +25,8 @@ This app is currently in development and should not be used yet. It is a persona
 - Additional accessibility features
 - Customizable button sizes
 - More channel presets
-- 
+- Changeable button icons
+
 ## Screenshots
 Below are two screenshots of the current UI:
 
