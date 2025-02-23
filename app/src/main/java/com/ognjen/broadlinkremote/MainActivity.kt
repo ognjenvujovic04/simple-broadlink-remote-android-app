@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.MotionEvent
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -154,7 +155,9 @@ class MainActivity : AppCompatActivity() {
         editControls.visibility = View.VISIBLE
         isEditingMode = true
 
-        // Change all buttons' borders to blue
+
+        val buttonContainer = findViewById<LinearLayout>(R.id.buttonContainer)
+
         val buttons = listOf(
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
@@ -162,18 +165,32 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel4)
         )
 
-        buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_main) }
+        val newHeight = resources.getDimensionPixelSize(R.dimen.edit_mode_button_height)
+        val containerMarginBottom = resources.getDimensionPixelSize(R.dimen.edit_mode_button_margin_bottom)
+
+        buttons.forEach {
+            it.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_main)
+            it.layoutParams.height = newHeight
+            it.requestLayout()
+        }
+
+        val containerParams = buttonContainer.layoutParams as ViewGroup.MarginLayoutParams
+        containerParams.bottomMargin = containerMarginBottom  // Add margin to container
+        buttonContainer.layoutParams = containerParams
+        buttonContainer.requestLayout()
+
 
         btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_circle)
         btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_blue_circle)
+    }
 
-}
 
     private fun exitEditMode() {
         editControls.visibility = View.GONE
         isEditingMode = false
 
-        // Restore original white border
+        val buttonContainer = findViewById<LinearLayout>(R.id.buttonContainer)
+
         val buttons = listOf(
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
@@ -181,11 +198,24 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel4)
         )
 
-        buttons.forEach { it.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_main) }
+        val originalHeight = resources.getDimensionPixelSize(R.dimen.default_button_height)
+        val noMargin = 0
+
+        buttons.forEach {
+            it.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_main)
+            it.layoutParams.height = originalHeight
+            it.requestLayout()
+        }
+
+        val containerParams = buttonContainer.layoutParams as ViewGroup.MarginLayoutParams
+        containerParams.bottomMargin = noMargin  // Remove container margin
+        buttonContainer.layoutParams = containerParams
+        buttonContainer.requestLayout()
 
         btnOnOff.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
         btnRefresh.foreground = ContextCompat.getDrawable(this, R.drawable.border_white_circle)
     }
+
 
 
 

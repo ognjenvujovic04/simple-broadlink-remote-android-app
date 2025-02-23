@@ -88,16 +88,18 @@
     <!-- Main content (channel buttons) -->
 
     <LinearLayout
+        android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/btnChannel1"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="130dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_channel1"
             android:clickable="true"
@@ -110,7 +112,7 @@
         <ImageView
             android:id="@+id/btnChannel2"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="130dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_channel2"
             android:clickable="true"
@@ -128,7 +130,7 @@
         <ImageView
             android:id="@+id/btnChannel3"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="130dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_channel3"
             android:clickable="true"
@@ -141,7 +143,7 @@
         <ImageView
             android:id="@+id/btnChannel4"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="130dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_channel4"
             android:clickable="true"
@@ -151,15 +153,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/rts_logo" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btnChannel5"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="110dp"-->
-<!--            android:background="@drawable/rounded_channel5"-->
-<!--            android:foreground="@drawable/border_white_main"-->
-<!--            android:text="@string/channel_5"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:textSize="24sp" />-->
     </LinearLayout>
 
     <!-- Overlay (covers the entire screen) -->
