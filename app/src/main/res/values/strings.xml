@@ -9,4 +9,6 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="edit_mode_message">Editing mode is active. Tap a button to edit its ir codes.</string>
+    <string name="tv_box_2">tv2</string>
+    <string name="tv_box_1">tv1</string>
 </resources>

@@ -30,22 +30,25 @@
 
         <!-- Buttons for saving or canceling changes -->
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnSave"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="@string/save"
                 android:background="@drawable/border_white_main"
                 android:textColor="#FFFFFF"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp" />
 
             <Button
                 android:id="@+id/btnCancel"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -69,6 +72,33 @@
         android:focusable="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp" />
+
+
+    <!-- TV Box 2 Button (Initially Hidden) -->
+    <Button
+        android:id="@+id/btnTvBox1"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/circle_background"
+        android:foreground="@drawable/border_blue_circle"
+        android:text="@string/tv_box_1"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btnTvBox2"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/circle_background"
+        android:foreground="@drawable/border_blue_circle"
+        android:text="@string/tv_box_2"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:layout_marginEnd="95dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true" /> <!-- Align to the right side -->
 
     <!-- On/Off Button (Right Side) -->
     <ImageButton

@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity() {
         editControls.visibility = View.VISIBLE
         isEditingMode = true
 
-
         val buttonContainer = findViewById<LinearLayout>(R.id.buttonContainer)
 
         val buttons = listOf(
@@ -164,6 +163,9 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel3),
             findViewById<ImageView>(R.id.btnChannel4)
         )
+
+        findViewById<Button>(R.id.btnTvBox1).visibility = View.VISIBLE
+        findViewById<Button>(R.id.btnTvBox2).visibility = View.VISIBLE
 
         val newHeight = resources.getDimensionPixelSize(R.dimen.edit_mode_button_height)
         val containerMarginBottom = resources.getDimensionPixelSize(R.dimen.edit_mode_button_margin_bottom)
@@ -197,6 +199,9 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.btnChannel3),
             findViewById<ImageView>(R.id.btnChannel4)
         )
+
+        findViewById<Button>(R.id.btnTvBox1).visibility = View.GONE
+        findViewById<Button>(R.id.btnTvBox2).visibility = View.GONE
 
         val originalHeight = resources.getDimensionPixelSize(R.dimen.default_button_height)
         val noMargin = 0
