@@ -28,7 +28,7 @@ class BroadlinkManager(private val context: Context) {
         var ret = false
         Thread {
             try {
-                val device = RM2Device("192.168.1.8", Mac("78:0f:77:17:ec:ee"))
+                val device = RM2Device("192.168.1.11", Mac("78:0f:77:17:ec:ee"))
                 device.auth()
 
                 broadlinkDevice = device
@@ -50,15 +50,20 @@ class BroadlinkManager(private val context: Context) {
         var ret = false
         Thread {
             try {
-                broadlinkDevice?.enterLearning()
+                val success = broadlinkDevice?.enterLearning()
+                Log.d("BroadlinkLog", "Enter Learning status: " + (if (success == true) "Success!" else "Failed!"))
                 Thread.sleep(3000)
                 val irCode = broadlinkDevice?.checkData()
+                Log.d("BroadlinkLog", "IR Code: $irCode")
 
-                irCode?.let {
-                    allIrCodes[remoteButtonName] = it
+                if (success == true && irCode != null) {
+                    allIrCodes[remoteButtonName] = irCode
+                    Log.d("BroadlinkLog", "All IR codes: $allIrCodes")
                     saveAllIRCodes()
                     ret = true
-                } ?: false
+                } else {
+                    ret = false
+                }
             } catch (e: Exception) {
                 Log.e("BroadlinkError", "Learning error: ${e.message}", e)
                 ret = false
@@ -146,16 +151,22 @@ class BroadlinkManager(private val context: Context) {
     fun sendIRCode(channelId: String): Boolean {
         return try {
             val sequence = btnIrCodes[channelId] ?: return false
-            sequence.forEach { buttonName ->
-                allIrCodes[buttonName]?.let { code ->
-                    // Todo send code to broadlink device
-                     broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
-                    Log.d("BroadLink", "Sent code for $buttonName")
-                }
+            if (sequence.isEmpty()) {
+                Log.d("BroadLinkLog", "No IR codes for $channelId")
             }
+
+            Thread {
+                sequence.forEach { buttonName ->
+                    Log.d("BroadLinkLog", "Sent code for $buttonName")
+                    allIrCodes[buttonName]?.let { code ->
+                        Log.d("BroadLinkLog", "Sending code: $code")
+                        broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
+                    }
+                }
+            }.start()
             true
         } catch (e: Exception) {
-            Log.e("BroadLink", "Send error: ${e.message}", e)
+            Log.e("BroadLinkError", "Send error: ${e.message}", e)
             false
         }
     }
