@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.Button
 import android.widget.ImageButton
@@ -15,9 +14,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.github.mob41.blapi.RM2Device
-import com.github.mob41.blapi.mac.Mac
-import com.github.mob41.blapi.pkt.cmd.rm2.SendDataCmdPayload
 
 
 class MainActivity : AppCompatActivity() {
@@ -137,56 +133,19 @@ class MainActivity : AppCompatActivity() {
                     R.id.btnChannel2 -> popupManager.showArenaPopup(view, isEditingMode)
                     R.id.btnChannel3 -> handleClick(this, "Bn", broadlinkManager)
                     R.id.btnChannel4 -> handleClick(this, "Rts", broadlinkManager)
-//                    R.id.btnChannel5 -> {
-//                        discoverBroadlinkDevices()
-//                    }
                 }
             }
         }
     }
 
-    // Discover BroadLink devices on the network
-    private fun discoverBroadlinkDevices() {
-        var success = false
 
-        Thread {
-            try {
-                Log.d("BroadlinkLog", "Starting device discovery...")
-
-                Log.d("BroadlinkLog", "Starting device discovery...")
-
-                val device = RM2Device("192.168.1.8", Mac("78:0f:77:17:ec:ee"))
-                device.auth()
-
-                success = device.enterLearning()
-                Thread.sleep(3000)
-
-                val irCode = device.checkData()
-                Log.d("BroadlinkLog", "IR Code: $irCode")
-
-
-                device.sendCmdPkt(SendDataCmdPayload(irCode))
-                Log.d("BroadlinkLog", "IR Code sent")
-
-                Log.d("BroadlinkLog", "Device discovery complete")
-            } catch (e: Exception) {
-                Log.e("BroadlinkError", "Error discovering devices: ${e.message}", e)
-                runOnUiThread {
-                    Toast.makeText(this, "Error discovering devices: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }.start()
-        Toast.makeText(this, "Enter Learning status: " + (if (success) "Success!" else "Failed!"), Toast.LENGTH_LONG).show()
-        Log.d("BroadlinkLog", "Enter Learning status: " + (if (success) "Success!" else "Failed!"))
-
-    }
 
     // Handles button clicks
     private fun handleClick(context: Context, buttonId: String, broadlinkManager: BroadlinkManager) {
         if (isEditingMode){
             editPopup.showEditPopup(buttonId)
         } else {
-            // todo, placeholder for broadlinkManager
+            broadlinkManager.sendIRCode(buttonId)
             Toast.makeText(context, "$buttonId clicked!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -197,7 +156,6 @@ class MainActivity : AppCompatActivity() {
 
         // Change all buttons' borders to blue
         val buttons = listOf(
-//            findViewById<Button>(R.id.btnChannel5),
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),
@@ -217,7 +175,6 @@ class MainActivity : AppCompatActivity() {
 
         // Restore original white border
         val buttons = listOf(
-//            findViewById<Button>(R.id.btnChannel5),
             findViewById<ImageView>(R.id.btnChannel1),
             findViewById<ImageView>(R.id.btnChannel2),
             findViewById<ImageView>(R.id.btnChannel3),
