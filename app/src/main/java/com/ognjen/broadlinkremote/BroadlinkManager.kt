@@ -251,4 +251,15 @@ class BroadlinkManager(private val context: Context) {
         }
     }
 
+    fun removeRemoteButton(remoteButtonName: String) {
+        allIrCodes.remove(remoteButtonName)
+        saveAllIRCodes()
+        for ((buttonId, sequence) in btnIrCodes) {
+            if (sequence.contains(remoteButtonName)) {
+                btnIrCodes[buttonId] = sequence.filter { it != remoteButtonName }
+            }
+        }
+        saveBtnIRCodes()
+    }
+
 }
