@@ -20,6 +20,7 @@ class BroadlinkManager(private val context: Context) {
     // Maps app buttons to sequences of real remote button codes
     private val btnIrCodes = mutableMapOf<String, List<String>>()
 
+    private var isMainTVBox = true
     private val gson = Gson()
     private val allCodesFile = File(context.filesDir, "ir_codes/all_codes.json")
     private val btnCodesFile = File(context.filesDir, "ir_codes/btn_mappings.json")
@@ -45,6 +46,75 @@ class BroadlinkManager(private val context: Context) {
         }.start()
 
         return ret
+    }
+
+    fun sendIRCode(channelId: String): Boolean {
+        return try {
+
+            val sequence = btnIrCodes[channelId] ?: return false
+            if (sequence.isEmpty()) {
+                Log.d("BroadLinkLog", "No IR codes for $channelId")
+            }
+
+            val isSk = channelId.contains("SK")
+
+            if (isSk){
+                if (isMainTVBox){
+                    switchTVBox()
+                }
+            }
+            else {
+                if (!isMainTVBox){
+                    switchTVBox()
+                }
+            }
+
+            Thread {
+                sequence.forEach { buttonName ->
+                    Log.d("BroadLinkLog", "Sent code for $buttonName")
+                    allIrCodes[buttonName]?.let { code ->
+                        Log.d("BroadLinkLog", "Sending code: $code")
+                        broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
+                    }
+                }
+            }.start()
+            true
+        } catch (e: Exception) {
+            Log.e("BroadLinkError", "Send error: ${e.message}", e)
+            false
+        }
+    }
+
+    fun switchTVBox(): Boolean {
+        if (isMainTVBox) {
+            isMainTVBox = false
+        } else {
+            isMainTVBox = true
+        }
+        return try {
+
+            val sequence = btnIrCodes["Refresh"] ?: return false
+            if (sequence.isEmpty()) {
+                Log.d("BroadLinkLog", "No IR codes for Refresh")
+            }
+
+            Log.d("BroadLinkLog", "Switching TV box")
+
+            Thread {
+                sequence.forEach { buttonName ->
+                    Log.d("BroadLinkLog", "Sent code for $buttonName")
+                    allIrCodes[buttonName]?.let { code ->
+                        Log.d("BroadLinkLog", "Sending code: $code")
+                        broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
+                    }
+                }
+            }.start()
+            true
+        } catch (e: Exception) {
+            Log.e("BroadLinkError", "Error while switching tv box: ${e.message}", e)
+            false
+        }
+
     }
 
     fun enterLearningMode(remoteButtonName: String): Boolean {
@@ -82,7 +152,7 @@ class BroadlinkManager(private val context: Context) {
         return ret
     }
 
-    fun saveAllIRCodes() {
+    private fun saveAllIRCodes() {
         try {
             val irCodesDir = File(context.filesDir, "ir_codes")
             if (!irCodesDir.exists()) {
@@ -155,29 +225,6 @@ class BroadlinkManager(private val context: Context) {
         return allIrCodes.keys
     }
 
-    fun sendIRCode(channelId: String): Boolean {
-        return try {
-            val sequence = btnIrCodes[channelId] ?: return false
-            if (sequence.isEmpty()) {
-                Log.d("BroadLinkLog", "No IR codes for $channelId")
-            }
-
-            Thread {
-                sequence.forEach { buttonName ->
-                    Log.d("BroadLinkLog", "Sent code for $buttonName")
-                    allIrCodes[buttonName]?.let { code ->
-                        Log.d("BroadLinkLog", "Sending code: $code")
-                        broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(code))
-                    }
-                }
-            }.start()
-            true
-        } catch (e: Exception) {
-            Log.e("BroadLinkError", "Send error: ${e.message}", e)
-            false
-        }
-    }
-
     private fun copyIRCodesIfNeeded() {
         val irCodesDir = File(context.filesDir, "ir_codes")
         val allCodesFile = File(irCodesDir, "all_codes.json")
@@ -202,6 +249,5 @@ class BroadlinkManager(private val context: Context) {
             Log.d("BroadlinkLog", "IR codes JSON already exists.")
         }
     }
-
 
 }
