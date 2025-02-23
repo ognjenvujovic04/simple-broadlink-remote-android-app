@@ -56,7 +56,13 @@ class BroadlinkManager(private val context: Context) {
                 val irCode = broadlinkDevice?.checkData()
                 Log.d("BroadlinkLog", "IR Code: $irCode")
 
+
+
                 if (success == true && irCode != null) {
+                    // Check if code was learned right
+                    Log.d("BroadLinkLog", "Sending code: $irCode")
+                    broadlinkDevice?.sendCmdPkt(SendDataCmdPayload(irCode))
+
                     allIrCodes[remoteButtonName] = irCode
                     Log.d("BroadlinkLog", "All IR codes: $allIrCodes")
                     saveAllIRCodes()
@@ -69,6 +75,7 @@ class BroadlinkManager(private val context: Context) {
                 ret = false
             }
         }.start()
+
         // Sleep to allow learning to complete
         Thread.sleep(3000)
         return ret
@@ -106,7 +113,6 @@ class BroadlinkManager(private val context: Context) {
             Log.e("BroadlinkError", "Save btn codes error: ${e.message}", e)
         }
     }
-
 
     private fun loadAllIRCodes() {
         try {
