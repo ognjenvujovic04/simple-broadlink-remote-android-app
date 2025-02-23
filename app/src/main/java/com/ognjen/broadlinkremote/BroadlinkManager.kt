@@ -92,8 +92,9 @@ class BroadlinkManager(private val context: Context) {
             isMainTVBox = true
         }
         return try {
+            val tvBoxId = if (isMainTVBox) "TvBox1" else "TvBox2"
 
-            val sequence = btnIrCodes["Refresh"] ?: return false
+            val sequence = btnIrCodes[tvBoxId] ?: return false
             if (sequence.isEmpty()) {
                 Log.d("BroadLinkLog", "No IR codes for Refresh")
             }

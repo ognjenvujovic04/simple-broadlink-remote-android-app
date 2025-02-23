@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnCancel: Button
     private lateinit var btnOnOff: ImageButton
     private lateinit var btnRefresh: ImageButton
+    private lateinit var btnTvBox1: Button
+    private lateinit var btnTvBox2: Button
     private val handler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
@@ -43,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         btnOnOff = findViewById(R.id.btnOnOff)
         btnRefresh = findViewById(R.id.btnRefresh)
 
+        // Initialize the tv box buttons
+        btnTvBox1 = findViewById(R.id.btnTvBox1)
+        btnTvBox2 = findViewById(R.id.btnTvBox2)
+
         // Initialize broadlinkManager
         // todo real address of the file
         broadlinkManager = BroadlinkManager(this)
@@ -50,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
 
         editPopup = EditPopup(this, broadlinkManager)
-
 
         btnSave.setOnClickListener {
             broadlinkManager.saveBtnIRCodes()
@@ -61,6 +66,15 @@ class MainActivity : AppCompatActivity() {
             broadlinkManager.loadBtnIRCodes()
             exitEditMode()
         }
+
+        btnTvBox1.setOnClickListener {
+            handleClick(this, "TvBox1", broadlinkManager)
+        }
+
+        btnTvBox2.setOnClickListener {
+            handleClick(this, "TvBox2", broadlinkManager)
+        }
+
 
         val overlay: View = findViewById(R.id.overlay)
         popupManager = PopupManager(this, overlay, ::handleClick, broadlinkManager)
