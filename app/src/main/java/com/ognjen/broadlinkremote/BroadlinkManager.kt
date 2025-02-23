@@ -32,6 +32,7 @@ class BroadlinkManager(private val context: Context) {
                 device.auth()
 
                 broadlinkDevice = device
+                copyIRCodesIfNeeded()
                 loadAllIRCodes()
                 loadBtnIRCodes()
 
@@ -176,5 +177,31 @@ class BroadlinkManager(private val context: Context) {
             false
         }
     }
+
+    private fun copyIRCodesIfNeeded() {
+        val irCodesDir = File(context.filesDir, "ir_codes")
+        val allCodesFile = File(irCodesDir, "all_codes.json")
+
+
+        Log.d("BroadlinkLog", "Checking if IR codes JSON exists...")
+
+        if (!allCodesFile.exists()) {
+            try {
+                irCodesDir.mkdirs() // Ensure the directory exists
+
+                context.assets.open("all_codes.json").use { inputStream ->
+                    allCodesFile.outputStream().use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
+                }
+                Log.d("BroadlinkLog", "Copied IR codes JSON on first run.")
+            } catch (e: Exception) {
+                Log.e("BroadlinkError", "Failed to copy IR codes JSON: ${e.message}", e)
+            }
+        } else {
+            Log.d("BroadlinkLog", "IR codes JSON already exists.")
+        }
+    }
+
 
 }
