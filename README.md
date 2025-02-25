@@ -35,6 +35,9 @@ Below are two screenshots of the current UI:
     <img src="assets/edit_mode.jpg" width="300">
 </p>
 
+## Acknowledgements
+## Acknowledgements
+This project uses a modified version of the [broadlink-java-api](https://github.com/a1aw/broadlink-java-api) library originally created by [a1aw](https://github.com/a1aw). As the original library was not maintained, I've forked and updated it to work with newer versions of Java and Kotlin. The updated library can be found at [ognjenvujovic04/broadlink-java-api](https://github.com/ognjenvujovic04/broadlink-java-api).
 
 ## License
 MIT License
